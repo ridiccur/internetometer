@@ -1,0 +1,4 @@
+/bin/
+*.xcframework
+*.aar
+*.jar
