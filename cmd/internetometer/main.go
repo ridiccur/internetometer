@@ -16,19 +16,23 @@ import (
 
 func main() {
 	var (
-		runSpeed = flag.Bool("speed", false, "run the latency/download/upload test against the Yandex CDN")
-		asJSON   = flag.Bool("json", false, "print raw JSON instead of a formatted report")
-		lang     = flag.String("lang", "en", `Yandex locale: "en" (yandex.com) or "ru" (yandex.ru)`)
+		fast   = flag.Bool("fast", false, "skip the speed test; only fetch IP, ASN, region and VPN flag")
+		asJSON = flag.Bool("json", false, "print raw JSON instead of a formatted report")
+		lang   = flag.String("lang", "en", `Yandex locale: "en" (yandex.com) or "ru" (yandex.ru)`)
 	)
+	// -speed is the historical default behaviour and now a no-op kept for
+	// compatibility; the speed test runs unless -fast is given.
+	flag.Bool("speed", false, "deprecated: the speed test runs by default (use -fast to skip)")
 	flag.Parse()
 
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
 
-	opts := core.Options{RunSpeedTest: *runSpeed, Language: *lang}
+	runSpeed := !*fast
+	opts := core.Options{RunSpeedTest: runSpeed, Language: *lang}
 	if !*asJSON {
 		fmt.Fprintln(os.Stderr, "Measuring connection via Yandex…")
-		if *runSpeed && isTerminal(os.Stderr) {
+		if runSpeed && isTerminal(os.Stderr) {
 			opts.OnProgress = newProgressBar()
 		}
 	}

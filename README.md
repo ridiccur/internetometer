@@ -17,8 +17,8 @@ cmd/      the console application
 ```bash
 go build -o bin/internetometer ./cmd/internetometer
 
-./bin/internetometer              # IP, ASN, region, VPN flag
-./bin/internetometer -speed       # also run latency/download/upload (live progress bar)
+./bin/internetometer              # full report incl. speed test (default)
+./bin/internetometer -fast        # skip the speed test: IP, ASN, region, VPN only
 ./bin/internetometer -lang ru     # use yandex.ru instead of yandex.com
 ./bin/internetometer -json        # machine-readable output
 ```
