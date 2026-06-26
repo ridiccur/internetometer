@@ -75,3 +75,7 @@ fields) is adapted from
 (MIT). This project restructures it into a dependency-free, mobile-bindable
 core and drops that project's third-party ISP lookup (`ip-api.com`) in favor
 of Yandex's own `isp` page field.
+
+## License
+
+[MIT](LICENSE) © ridiccur
